@@ -9,6 +9,7 @@ html, body {
   font-family: 'Comfortaa', cursive;
 }
 
+/* Main container */
 #container {
   width: 100%;
   height: 100%;
@@ -26,7 +27,7 @@ html, body {
   transform: translateY(-200px) scale(1);
 }
 
-/* Game */
+/* Game area */
 #container #game {
   position: absolute;
   top: 0;
@@ -35,7 +36,7 @@ html, body {
   left: 0;
 }
 
-/* Game Over */
+/* Game Over screen */
 #container .game-over {
   position: absolute;
   top: 0;
@@ -61,7 +62,7 @@ html, body {
   font-size: 40px;
 }
 
-/* Game Ready */
+/* Game Ready screen */
 #container .game-ready {
   position: absolute;
   top: 0;
@@ -100,7 +101,7 @@ html, body {
   opacity: 0 !important;
 }
 
-/* States */
+/* Game states */
 #container.playing #score,
 #container.resetting #score {
   transform: translateY(0px) scale(1);
