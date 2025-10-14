@@ -198,3 +198,194 @@ $(window).resize(function () {
 $(window).on("orientationchange", function () {
     game.scaleScreenAndRun();
 });
+
+class Stick {
+    constructor() {
+        this.stick = this.addStick();
+    }
+
+    addStick() {
+        const stickEl = $('<div class="stick inactive"></div>');
+        $('#sticks').append(stickEl);
+        return stickEl;
+    }
+}
+
+class Color {
+    constructor() {
+        this.colors = ["#FF4571", "#FFD145", "#8260F6"];
+        this.effects = ["bubble", "triangle", "block"];
+        this.prevEffect = null;
+    }
+
+    getRandomColor() {
+        const index = Math.floor(Math.random() * 3);
+        return this.colors[index];
+    }
+
+    colorcodeToName(color) {
+        const mapping = {
+            "#FF4571": "red",
+            "#FFD145": "yellow",
+            "#8260F6": "purple"
+        };
+        return mapping[color] || false;
+    }
+
+    changeColor(el) {
+        let index = el.data("index") ?? 0;
+        index = (index + 1) % 3;
+        el.css('background-color', this.colors[index]).data('index', index);
+
+        el.removeClass('red yellow purple').addClass(this.colorcodeToName(this.colors[index]));
+
+        if (el.hasClass('inactive')) {
+            this.setEffect(el);
+            el.addClass('no-effect');
+        }
+
+        el.removeClass('inactive');
+    }
+
+    getRandomEffect() {
+        let effectIndex;
+        do {
+            effectIndex = Math.floor(Math.random() * 3);
+        } while (effectIndex === this.prevEffect);
+        this.prevEffect = effectIndex;
+        return this.effects[effectIndex];
+    }
+
+    setEffect(el) {
+        const effect = this.getRandomEffect();
+        el.addClass(`${effect}-stick`);
+        for (let i = 1; i <= 14; i++) {
+            if (effect === 'block') {
+                el.append(`<div class="${effect} ${effect}-${i}"><div class="inner"></div><div class="inner inner-2"></div></div>`);
+            } else {
+                el.append(`<div class="${effect} ${effect}-${i}"></div>`);
+            }
+        }
+    }
+
+    static getColorFromClass(el) {
+        const classes = $(el).attr('class').split(/\s+/);
+        for (let cls of classes) {
+            if (["red", "yellow", "purple"].includes(cls)) return cls;
+        }
+    }
+}
+
+class Animation {
+    static generateSmallGlows(number) {
+        let h = $(window).height();
+        let w = $(window).width();
+        const scale = (w > h) ? h / 800 : w / 1200;
+        h /= scale;
+        w /= scale;
+
+        for (let i = 0; i < number; i++) {
+            const left = Math.floor(Math.random() * w);
+            const top = Math.floor(Math.random() * (h / 2));
+            const size = Math.floor(Math.random() * 8) + 4;
+            const glow = $('<div class="small-glow"></div>').css({ left, top, width: size, height: size });
+            $('.small-glows').prepend(glow);
+        }
+    }
+
+    playBubble(el) {
+        const tl = gsap.timeline({ repeat: -1, yoyo: true });
+        tl.to(el.find('.bubble'), { scale: 1, duration: 0.3, stagger: 0.03 });
+        tl.to(el.find('.bubble'), { y: '-=60', duration: 0.5, stagger: 0.03 });
+    }
+
+    playTriangle(el) {
+        const tl = gsap.timeline({ repeat: -1 });
+        tl.to(el.find('.triangle'), { scale: 1, duration: 0.3, stagger: 0.03 });
+        tl.to(el.find('.triangle'), {
+            rotationY: 360,
+            rotationX: 0,
+            duration: 1.5,
+            stagger: 0.1,
+            repeat: -1
+        });
+    }
+
+    playBlock(el) {
+        const tl1 = gsap.timeline({ repeat: -1, yoyo: true });
+        tl1.to(el.find('.block'), { scale: 1, duration: 0.3, stagger: 0.03 });
+        tl1.to(el.find('.block .inner:not(.inner-2)'), { x: '+=200%', duration: 1, repeat: -1, stagger: 0.1 });
+        tl1.to(el.find('.block .inner-2'), { x: '+=200%', duration: 1, repeat: -1, stagger: 0.1 });
+    }
+
+    static sceneAnimation() {
+        const speed = 15;
+        $('.small-glow').each(function () {
+            const radius = Math.floor(Math.random() * 20) + 20;
+            gsap.to($(this), { rotation: 360, duration: speed, repeat: -1, transformOrigin: `-${radius}px -${radius}px` });
+        });
+
+        const waves = ['.top_wave', '.wave1', '.wave2', '.wave3', '.wave4'];
+        waves.forEach((w, i) => {
+            gsap.to(w, { backgroundPositionX: '-=54px', duration: speed * (1 + i * 0.1) / 42, repeat: -1, ease: "none" });
+        });
+
+        const mountains = ['.mount1', '.mount2'];
+        mountains.forEach((m, i) => {
+            gsap.to(m, { backgroundPositionX: '-=' + (1760 + i * 22) + 'px', duration: speed * (8 + i * 2), repeat: -1, ease: "none" });
+        });
+
+        gsap.to('.clouds', { backgroundPositionX: '-=1001px', duration: speed * 3, repeat: -1, ease: "none" });
+    }
+}
+
+// Initialize game objects
+var game = new Game();
+var animation = new Animation();
+var color = new Color();
+var userAgent = window.navigator.userAgent;
+
+// Generate background small glows
+Animation.generateSmallGlows(20);
+
+$(document).ready(function(){
+    game.scaleScreen();   // scale the screen properly
+    game.intro();         // show intro animation
+    
+    // Show play full page button for very small screens
+    if($(window).height() < 480) {
+        $('.play-full-page').css('display', 'block');
+    }
+});
+
+// Stick click events to change color and trigger effects
+$(document).on('click', '.stick', function(){
+    color.changeColor($(this));
+    if($(this).hasClass('no-effect')) {
+        if($(this).hasClass('bubble-stick')) {
+            animation.playBubble($(this));
+        } else if($(this).hasClass('triangle-stick')) {
+            animation.playTriangle($(this));
+        } else if($(this).hasClass('block-stick')) {
+            animation.playBlock($(this));
+        }
+        $(this).removeClass('no-effect');
+    }
+});
+
+// Bar click event (for section-2 bars)
+$(document).on('click', '.section-2 .bar', function(){
+    color.changeColor($(this));
+});
+
+// Handle window resize (except on iOS devices)
+$(window).resize(function(){
+    if (!userAgent.match(/iPad/i) && !userAgent.match(/iPhone/i)) {
+        game.scaleScreenAndRun();
+    }
+});
+
+// Handle device orientation change
+$(window).on("orientationchange", function(){
+    game.scaleScreenAndRun();
+});
