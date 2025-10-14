@@ -1,60 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coloron Game</title>
 
-  <!-- ✅ Link to your compiled CSS -->
-  <link rel="stylesheet" href="style.css">
+<div class="splash"></div>
 
-  <!-- ✅ External libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<div class="container">
 
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #28DAD4;
-      overflow: hidden;
-    }
-  </style>
-</head>
-<body>
-  <!-- Splash screen if needed -->
-  <div class="splash"></div>
+    <!-- Start Game Screen -->
+    <div class="start-game game-full-flex" id="start-game">
 
-  <!-- Game container -->
-  <div class="container">
-    <div id="sticks"></div>
-    <div class="scene">
-      <div class="ball-holder"></div>
+        <div class="start-game-top">
+            <a class="play-full-page" href="https://codepen.io/gregh/full/yVLOyO/" target="_blank">Full Page Mode</a>
+        </div>
+
+        <div class="logo-holder">
+            <p class="logo">
+                <span>C</span>
+                <span>o</span>
+                <span>l</span>
+                <span>o</span>
+                <span>r</span>
+                <span>o</span>
+                <span>n</span>
+            </p>
+            <a class="play-button" href="#" id="play-button">Play</a>
+            <h4 class="hint">hint: <span>red</span> color always comes first</h4>
+        </div>
+
+        <div class="how-to-play">
+            <div class="section section-1">
+                <h4>Bouncing ball<br>changes color</h4>
+                <div class="content">
+                    <div class="ball-demo ball-demo-1"></div>
+                </div>
+            </div>
+            <div class="section section-2">
+                <h4>Tap on the bar to switch the colors<br>(Red, Yellow, Purple)</h4>
+                <div class="content">
+                    <div class="bar bar-1" data-index="0"></div>
+                    <div class="bar bar-2"></div>
+                    <div class="bar bar-3"></div>
+                </div>
+            </div>
+            <div class="section section-3">
+                <h4>Always match the<br>ball and bar colors</h4>
+                <div class="content">
+                    <div class="ball-demo ball-demo-2"></div>
+                    <div class="bar bar-1 demo-bar"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="start-game">
-      <div class="logo-holder"><span>Coloron</span></div>
-      <div class="bar"></div>
-      <div class="ball-demo"></div>
+    <!-- Stop Game Screen -->
+    <div class="stop-game game-full-flex" id="stop-game">
+        <div class="score-container">
+            <h1>Coloron</h1>
+            <div class="final-score" id="final-score"></div>
+            <div class="result" id="result"></div>
+            <h4>Tweet to challenge friends</h4>
+            <p>
+                <a class="tweet" href="#" id="tweet-button">
+                    <i class="fa fa-twitter" aria-hidden="true"></i> Tweet
+                </a>
+            </p>
+            <div>
+                <a class="play-again" href="#" id="play-again">Play Again</a>
+                <a class="main-menu" href="#" id="main-menu">Menu</a>
+            </div>
+        </div>
     </div>
 
-    <div class="stop-game">
-      <div class="score-container">
-        <div class="final-score"></div>
-        <div class="result"></div>
-      </div>
-    </div>
-
+    <!-- Glows -->
     <div class="small-glows"></div>
-  </div>
+    <div class="glow"><div class="sun"></div></div>
 
-  <!-- Score display -->
-  <div id="score">0</div>
+    <!-- Waves -->
+    <div class="waves">
+        <div class="top_wave"></div>
+        <div class="wave1"></div>
+        <div class="wave2"></div>
+        <div class="wave3"></div>
+        <div class="wave4"></div>
+    </div>
 
-  <!-- JS libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- Mountains -->
+    <div class="mounts">
+        <div class="mount1"></div>
+        <div class="mount2"></div>
+    </div>
 
-  <!-- Your game script -->
-  <script src="script.js"></script>
-</body>
+    <!-- Clouds -->
+    <div class="clouds"></div>
+
+    <!-- Scene -->
+    <div class="scene">
+        <div class="learn-to-play">Click on the bars to change the color!</div>
+        <div class="score" id="score"></div>
+        <div class="ball-holder" id="ball-holder"></div>
+        <div class="sticks" id="sticks"></div>
+    </div>
+
+    <!-- Noise overlay -->
+    <div class="noise"></div>
+
+</div>
