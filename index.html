@@ -22,20 +22,39 @@
   </style>
 </head>
 <body>
-
-  <!-- ✅ Your full game HTML (paste here) -->
-  <!-- 👇👇👇 -->
-  <!-- paste everything you just sent: -->
-  <!-- from <div class="splash"></div> down to </div> -->
+  <!-- Splash screen if needed -->
   <div class="splash"></div>
-  <div class="container">
-    <!-- ... all your game HTML ... -->
-  </div>
-  <!-- 👆👆👆 -->
 
-  <!-- ✅ Load your JavaScript -->
+  <!-- Game container -->
+  <div class="container">
+    <div id="sticks"></div>
+    <div class="scene">
+      <div class="ball-holder"></div>
+    </div>
+
+    <div class="start-game">
+      <div class="logo-holder"><span>Coloron</span></div>
+      <div class="bar"></div>
+      <div class="ball-demo"></div>
+    </div>
+
+    <div class="stop-game">
+      <div class="score-container">
+        <div class="final-score"></div>
+        <div class="result"></div>
+      </div>
+    </div>
+
+    <div class="small-glows"></div>
+  </div>
+
+  <!-- Score display -->
+  <div id="score">0</div>
+
+  <!-- JS libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Your game script -->
   <script src="script.js"></script>
 </body>
-</html>
-
-
