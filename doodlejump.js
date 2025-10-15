@@ -43,7 +43,7 @@ window.onload = function() {
     context = board.getContext("2d"); //used for drawing on the board
 
     //draw doodler
-    // context.fillStyle = "green";
+    // context.fillStyle = "black";
     // context.fillRect(doodler.x, doodler.y, doodler.width, doodler.height);
 
     //load images
@@ -214,4 +214,5 @@ function updateScore() {
     else if (velocityY >= 0) {
         maxScore -= points;
     }
+
 }
