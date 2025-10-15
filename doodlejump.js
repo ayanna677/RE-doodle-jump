@@ -71,9 +71,13 @@ function update() {
     if (gameOver) {
         return;
     }
-    context.clearRect(0, 0, board.width, board.height);
 
-    //doodler
+    // clear + paint background
+    context.clearRect(0, 0, board.width, board.height);
+    context.fillStyle = "white";  // background color
+    context.fillRect(0, 0, board.width, board.height);  // draw white background
+
+    // doodler
     doodler.x += velocityX;
     if (doodler.x > boardWidth) {
         doodler.x = 0;
@@ -88,6 +92,7 @@ function update() {
         gameOver = true;
     }
     context.drawImage(doodler.img, doodler.x, doodler.y, doodler.width, doodler.height);
+
 
     //platforms
     for (let i = 0; i < platformArray.length; i++) {
@@ -216,3 +221,4 @@ function updateScore() {
     }
 
 }
+
